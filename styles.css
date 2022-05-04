@@ -1,3 +1,57 @@
 body{
-    background-color: coral;
+    margin: 0;
+    background-color: #DDDDDD;
+    font-size: 1.5rem;
+}
+*{
+    box-sizing: border-box;
+}
+div{
+    border: 1px solid #DDDDDD;
+}
+.calculator{
+    height: 500px;
+    width: 400px;
+    margin: 250px auto;
+    background-color: #000;
+    color: #DDDDDD;
+    border-radius: 3% 3% 3% 3%;
+}
+/* display screen */
+.display{
+    display: flex;
+    width: 400px;
+    height: 100px;
+}
+.screen{
+    flex-basis: 300px;
+}
+.clearScreen{
+    height: 100px;
+    width: 100px;
+    float: right;
+}
+.reset,.clear{
+    height: 50%;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* digits */
+.buttons{
+    display: grid;
+    grid-template-columns: repeat(4,100px);
+    font-size: 2.5rem;
+}
+.buttons div{
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.operator{
+    background-color: #FF8C32;
 }
