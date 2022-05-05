@@ -1,4 +1,6 @@
-
+let operand = "";
+let result = "";
+let operator = "";
 // getting all dom elements to work with
 let digits = document.querySelectorAll(".digit");
 let operators = document.querySelectorAll(".operator");
@@ -16,8 +18,40 @@ operators.forEach((operator) => {
 reset.addEventListener("click",resetCalculator);
 clear.addEventListener("click",clearScreen);
 
-//2 on clicking a digit append the digit to the variable firstOperand
+function getOperand(e){
+    operand += e.target.textContent;
+    resultScreen.lastElementChild.textContent += e.target.textContent;
+}
 
-//3 on clicking a operator
-//  3.1 if both operand exit then operate on them and store result and operator
-//  3.2 else start appending digits to another variable secondOperand and store operator
+function getOperator(e) {
+    if(!result && operand && !operator){
+        result = operand;
+        operand = "";
+        operator = e.target.textContent;
+        resultScreen.lastElementChild.textContent += operator;
+    }else if(result && operand && operator){
+        result = operate();
+        operand = "";
+        operator = (e.target.textContent === "=" ? "" : e.target.textContent);
+        resultScreen.lastElementChild.textContent = result + operator;
+    }else if(result && !operand && !operator){
+        operator = e.target.textContent;
+        resultScreen.lastElementChild.textContent += operator;
+    }
+}
+
+function operate() {
+    switch(operator){
+        case "+": return Number(result) + Number(operand);
+        case "-": return Number(result) - Number(operand);
+        case "x": return Number(result) * Number(operand);
+        case "/": return Number(result) / Number(operand);
+    }
+}
+
+function resetCalculator() {
+    operand = "";
+    result = "";
+    operator = "";
+    resultScreen.lastElementChild.textContent = "";
+}
