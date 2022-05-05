@@ -20,7 +20,7 @@ clear.addEventListener("click",clearScreen);
 
 function getOperand(e){
     operand += e.target.textContent;
-    resultScreen.lastElementChild.textContent += e.target.textContent;
+    show();
 }
 
 function getOperator(e) {
@@ -28,16 +28,14 @@ function getOperator(e) {
         result = operand;
         operand = "";
         operator = e.target.textContent;
-        resultScreen.lastElementChild.textContent += operator;
     }else if(result && operand && operator){
         result = operate();
         operand = "";
         operator = (e.target.textContent === "=" ? "" : e.target.textContent);
-        resultScreen.lastElementChild.textContent = result + operator;
     }else if(result && !operand && !operator){
         operator = e.target.textContent;
-        resultScreen.lastElementChild.textContent += operator;
     }
+    show();
 }
 
 function operate() {
@@ -53,5 +51,15 @@ function resetCalculator() {
     operand = "";
     result = "";
     operator = "";
-    resultScreen.lastElementChild.textContent = "";
+    //resultScreen.lastElementChild.textContent = "";
+    show();
+}
+
+function clearScreen() {
+    operand ? operand = operand.slice(0,-1) :
+    operator ? operator = "" : result = String(result).slice(0,-1);
+    show();
+}
+function show(){
+    resultScreen.lastElementChild.textContent = result + operator + operand;
 }
