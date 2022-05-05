@@ -23,25 +23,25 @@ clear.addEventListener("click",clearScreen);
 function getOperand(e){
     animateClick(e);
     operand += e.target.textContent;
-    if(e.target.textContent === ".") decimal.removeEventListener("click",getOperand); 
+    if(e.target.textContent === ".") decimal.removeEventListener("click",getOperand); //prevent user from entering more than one decimal
     show();
 }
 
 function getOperator(e) {
-    if(operand.includes(".")) decimal.addEventListener("click",getOperand);
+    if(operand.includes(".")) decimal.addEventListener("click",getOperand);//let user access decimal button again for new operand
     animateClick(e);
-    if(!result && operand && !operator){
+    if(!result && operand && !operator){ // when it is first claculation
         result = operand;
         operand = "";
-        operator = (e.target.textContent === "=" ? "" : e.target.textContent);
-    }else if(result && operand && operator){
+    }else if(result && operand && operator){  // when all operands are entered
         result = operate();
-        if(result === "Error" ) handleError();
+        if(result === "Error" ){ // reset
+             handleError();
+             return;
+         }
         operand = "";
-        operator = (e.target.textContent === "=" ? "" : e.target.textContent);
-    }else if(result && !operand && !operator){
-        operator = (e.target.textContent === "=" ? "" : e.target.textContent);
     }
+    operator = (e.target.textContent === "=" ? "" : e.target.textContent);
     show();
 }
 
@@ -53,19 +53,19 @@ function operate() {
         case "x": operationResult = Number(result) * Number(operand); break;
         case "/":  operationResult = Number(result) / Number(operand); break;
     }
-    if(operationResult === Infinity || operationResult === -Infinity) return "Error";
-    return Math.round(operationResult*1000)/1000;
+    if(operationResult === Infinity || operationResult === -Infinity) return "Error"; // divide by zero
+    return Math.round(operationResult*1000)/1000; // round upto 3 decimal points
 }
 
 function resetCalculator(e) {
-    if(e) animateClick(e);
+    if(e) animateClick(e); // when called by click then only animate
     operand = "";
     result = "";
     operator = "";
     show();
 }
 
-function clearScreen(e) {
+function clearScreen(e) {  // used ad backspace
     animateClick(e);
     operand ? operand = operand.slice(0,-1) :
     operator ? operator = "" : result = String(result).slice(0,-1);
@@ -75,7 +75,7 @@ function show(){
     resultScreen.lastElementChild.textContent = result + operator + operand;
 }
 
-function animateClick(e){
+function animateClick(e){ // increse size of clicked button by .2rem for .2s
 
     if(e.target.className === 'clear' || e.target.className === 'reset'){
         e.target.style.fontSize = "1.8rem";
