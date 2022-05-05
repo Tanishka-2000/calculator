@@ -7,6 +7,7 @@ let operators = document.querySelectorAll(".operator");
 let resultScreen = document.querySelector(".screen");
 let reset = document.querySelector(".reset");
 let clear = document.querySelector(".clear");
+let decimal = document.querySelector(".decimal");
 
 //1 adding event listeners to all buttons(digits/operators)
 digits.forEach((digit) => {
@@ -18,13 +19,16 @@ operators.forEach((operator) => {
 reset.addEventListener("click",resetCalculator);
 clear.addEventListener("click",clearScreen);
 
+
 function getOperand(e){
     animateClick(e);
     operand += e.target.textContent;
+    if(e.target.textContent === ".") decimal.removeEventListener("click",getOperand); 
     show();
 }
 
 function getOperator(e) {
+    if(operand.includes(".")) decimal.addEventListener("click",getOperand);
     animateClick(e);
     if(!result && operand && !operator){
         result = operand;
@@ -32,6 +36,7 @@ function getOperator(e) {
         operator = (e.target.textContent === "=" ? "" : e.target.textContent);
     }else if(result && operand && operator){
         result = operate();
+        if(result === "Error" ) handleError();
         operand = "";
         operator = (e.target.textContent === "=" ? "" : e.target.textContent);
     }else if(result && !operand && !operator){
@@ -41,16 +46,19 @@ function getOperator(e) {
 }
 
 function operate() {
+    let operationResult;
     switch(operator){
-        case "+": return Number(result) + Number(operand);
-        case "-": return Number(result) - Number(operand);
-        case "x": return Number(result) * Number(operand);
-        case "/": return Number(result) / Number(operand);
+        case "+": operationResult =  Number(result) + Number(operand); break;
+        case "-": operationResult = Number(result) - Number(operand); break;
+        case "x": operationResult = Number(result) * Number(operand); break;
+        case "/":  operationResult = Number(result) / Number(operand); break;
     }
+    if(operationResult === Infinity || operationResult === -Infinity) return "Error";
+    return Math.round(operationResult*1000)/1000;
 }
 
 function resetCalculator(e) {
-    animateClick(e);
+    if(e) animateClick(e);
     operand = "";
     result = "";
     operator = "";
@@ -73,11 +81,16 @@ function animateClick(e){
         e.target.style.fontSize = "1.8rem";
         setTimeout(function(){
             e.target.style.fontSize = "1.5rem";
-        },100);
+        },200);
     }else{
         e.target.style.fontSize = "2.8rem";
         setTimeout(function(){
             e.target.style.fontSize = "2.5rem";
-        },100);
+        },200);
     }
+}
+
+function handleError() {
+    resultScreen.lastElementChild.textContent = "ERROR!";
+    setTimeout(resetCalculator,1000);
 }

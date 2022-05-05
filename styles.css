@@ -16,6 +16,7 @@ div{
     background-color: #000;
     color: #DDDDDD;
     border-radius: 3% 3% 3% 3%;
+
 }
 /* display screen */
 .display{
@@ -58,4 +59,6 @@ div{
 }
 .operator{
     background-color: #FF8C32;
+    color: #000;
+    font-weight: bold;
 }
