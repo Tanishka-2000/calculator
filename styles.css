@@ -27,7 +27,7 @@ div{
     flex-basis: 300px;
 }
 .screen p,h1{
-    margin: 0 8px;
+    margin: 0 8px ;
     text-align: right;
 }
 .clearScreen{

@@ -19,21 +19,23 @@ reset.addEventListener("click",resetCalculator);
 clear.addEventListener("click",clearScreen);
 
 function getOperand(e){
+    animateClick(e);
     operand += e.target.textContent;
     show();
 }
 
 function getOperator(e) {
+    animateClick(e);
     if(!result && operand && !operator){
         result = operand;
         operand = "";
-        operator = e.target.textContent;
+        operator = (e.target.textContent === "=" ? "" : e.target.textContent);
     }else if(result && operand && operator){
         result = operate();
         operand = "";
         operator = (e.target.textContent === "=" ? "" : e.target.textContent);
     }else if(result && !operand && !operator){
-        operator = e.target.textContent;
+        operator = (e.target.textContent === "=" ? "" : e.target.textContent);
     }
     show();
 }
@@ -47,19 +49,35 @@ function operate() {
     }
 }
 
-function resetCalculator() {
+function resetCalculator(e) {
+    animateClick(e);
     operand = "";
     result = "";
     operator = "";
-    //resultScreen.lastElementChild.textContent = "";
     show();
 }
 
-function clearScreen() {
+function clearScreen(e) {
+    animateClick(e);
     operand ? operand = operand.slice(0,-1) :
     operator ? operator = "" : result = String(result).slice(0,-1);
     show();
 }
 function show(){
     resultScreen.lastElementChild.textContent = result + operator + operand;
+}
+
+function animateClick(e){
+
+    if(e.target.className === 'clear' || e.target.className === 'reset'){
+        e.target.style.fontSize = "1.8rem";
+        setTimeout(function(){
+            e.target.style.fontSize = "1.5rem";
+        },100);
+    }else{
+        e.target.style.fontSize = "2.8rem";
+        setTimeout(function(){
+            e.target.style.fontSize = "2.5rem";
+        },100);
+    }
 }
