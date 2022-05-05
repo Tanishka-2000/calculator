@@ -1,44 +1,57 @@
 body{
     margin: 0;
-    background-color: #DDDDDD;
+    background-color: #111;
     font-size: 1.5rem;
 }
 *{
     box-sizing: border-box;
 }
 div{
-    border: 1px solid #DDDDDD;
+    border: none;
 }
 .calculator{
-    height: 500px;
-    width: 400px;
-    margin: 250px auto;
-    background-color: #000;
-    color: #DDDDDD;
+    height: 640px;
+    width: 420px;
+    margin: 200px auto;
+    background-color: #999;
+    color: #ddd;
     border-radius: 3% 3% 3% 3%;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 /* display screen */
 .display{
     display: flex;
     width: 400px;
-    height: 100px;
+    height: 200px;
+    margin-bottom: 10px;
 }
 .screen{
-    flex-basis: 300px;
+    flex-basis: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-color: #bbb;
+    border-radius: 10px;
+    margin:15px;
 }
 .screen p,h1{
     margin: 0 8px ;
     text-align: right;
+    color: #555;
 }
 .clearScreen{
-    height: 100px;
+    height: 200px;
     width: 100px;
     float: right;
 }
 .reset,.clear{
     height: 50%;
     width: 100px;
+    border-radius: 50%;
+    background-color: #FF8C32;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,17 +61,20 @@ div{
 .buttons{
     display: grid;
     grid-template-columns: repeat(4,100px);
+    grid-column-gap: 2px;
+    grid-row-gap: 10px;
     font-size: 2.5rem;
 }
 .buttons div{
-    height: 100px;
-    width: 100px;
+    background-color: #FF8C32;
+    height: 90px;
+    width: 90px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 50%;
 }
 .operator{
-    background-color: #FF8C32;
-    color: #000;
+    /* background-color: #FF8C32; */
     font-weight: bold;
 }
